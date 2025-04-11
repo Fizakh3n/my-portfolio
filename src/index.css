@@ -1,0 +1,394 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa; /* Soft beige */
+  color: #1e1e2f; /* Deep navy blackish */
+  line-height: 1.6;
+}
+
+.project-title {
+  margin-top: 0; 
+}
+
+#projects {
+  padding-top: 1rem;
+}
+
+
+
+
+/* Navbar */
+.navbar {
+  background-color: #0a1128; /* Rich navy */
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #f1f1f1;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.navbar a:hover {
+  color: #d4af37; /* Golden-beige accent */
+}
+
+/* Hero */
+.hero {
+  background-color: #e6e6e6;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #0a1128;
+  margin-bottom: 1rem;
+}
+
+.hero .intro {
+  font-size: 1.2rem;
+  color: #555;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Sections */
+section {
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #0a1128;
+  margin-bottom: 1rem;
+}
+
+.project {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.project h3 {
+  margin-bottom: 0.5rem;
+}
+
+.project a {
+  color: #0a1128;
+  text-decoration: underline;
+  margin-right: 1rem;
+}
+.contact{
+  color: #0a1128;
+  text-align: left;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  border-left: 4px solid #d4af37; /* golden accent */
+  padding-left: 12px;
+}
+
+#contact ul {
+  list-style: none;
+  padding: 0;
+}
+
+#contact li {
+  margin-bottom: 0.5rem;
+}
+
+#contact a {
+  color: #0a1128;
+  text-decoration: none;
+}
+
+#contact a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .navbar {
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero .intro {
+    font-size: 1rem;
+  }
+}
+.contact-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.contact-icons a {
+  font-size: 24px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.contact-icons a:hover {
+  color: #0072b1; /* LinkedIn blue or your theme color */
+}
+
+#contact {
+  margin-top: 2rem;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.top-bar {
+  background-color: #001f3f; /* sleek navy blue */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 40px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #ffdd57; /* optional hover color */
+}
+
+.intro-line {
+  text-align: center;
+  padding: 20px 20px;  /* Reduced top padding */
+  font-size: 24px;
+  font-style: italic;
+  color: #222;
+}
+
+
+.headline {
+  font-size: 48px;      /* 3x bigger */
+  font-weight: bold;
+  margin-left: 20px;
+  color: #ffffff;
+  font-style: italic;
+}
+.section-title {
+  color: #0a1128;
+  text-align: left;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  border-left: 4px solid #d4af37; /* golden accent */
+  padding-left: 12px;
+}
+
+
+
+.about-card:hover {
+  transform: scale(1.02);
+}
+
+.about-text {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #333333;
+  line-height: 1.8;
+}
+.about-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+
+  /* Animation styles */
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.project-title{ 
+
+  color: #0a1128;
+  text-align: left;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  border-left: 4px solid #d4af37; /* golden accent */
+  padding-left: 12px;
+}
+
+.project {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 0.5 rem;
+  margin-bottom: 1.5rem;
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.project h3 {
+  color: #0a1128;
+  margin-bottom: 0.5rem;
+}
+
+.project a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: 500;
+}
+
+.project a:hover {
+  text-decoration: underline;
+}
+#about {
+  margin-bottom: 1rem; /* or even 0.5rem if you want it tighter */
+}
+
+#projects {
+  margin-top: 0rem; /* Kill that extra breathing room */
+}
+.project {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.project h3 {
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  margin-bottom: 0.4rem;
+}
+
+.project p {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+.project p em {
+  font-style: italic;
+  color: #333;
+}
+
+.project a {
+  color: #0a66c2;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.project a:hover {
+  text-decoration: underline;
+}
+
+section {
+  background: linear-gradient(to right, #f8f9fa, #e0eafc);
+}
+.project {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+html {
+  scroll-behavior: smooth;
+}
+body.dark-mode {
+  background-color: #0a1128;
+  color: #f5f5f5;
+}
+
+.dark-mode a {
+  color: #ffdd57;
+}
+
+#theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #777;
+  border-top: 1px solid #eee;
+}
+
+
+
+

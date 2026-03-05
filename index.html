@@ -296,31 +296,28 @@
     }
 
     /* ── TECH STACK ── */
-    #stack { background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04), transparent); }
-
-    .stack-categories { display: flex; flex-direction: column; gap: 2.5rem; }
-    .stack-cat-label {
-      font-family: 'Space Mono', monospace; font-size: 0.68rem;
-      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
-      margin-bottom: 1rem;
-    }
-    .stack-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
-
-    .tech-pill {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.55rem 1rem;
-      background: var(--glass); border: 1px solid var(--glass-border);
-      border-radius: 4px; backdrop-filter: blur(10px);
-      font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
-      transition: all 0.25s; cursor: default;
-    }
-    .tech-pill img { width: 18px; height: 18px; object-fit: contain; }
-    .tech-pill:hover {
-      border-color: var(--glass-border-hover); color: var(--text);
-      background: rgba(124,58,237,0.12);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 20px rgba(124,58,237,0.2);
-    }
+#stack { background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04), transparent); }
+.stack-categories { display: flex; flex-direction: column; gap: 2.5rem; }
+.stack-cat-label {
+  font-family: 'Space Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
+  margin-bottom: 1rem;
+}
+.stack-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.tech-pill {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  background: var(--glass); border: 1px solid var(--glass-border);
+  border-radius: 4px; backdrop-filter: blur(10px);
+  font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
+  transition: all 0.25s; cursor: default;
+}
+.tech-pill:hover {
+  border-color: var(--glass-border-hover); color: var(--purple-glow);
+  background: rgba(124,58,237,0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(124,58,237,0.2);
+}
 
     /* ── PROJECTS ── */
     .proj-cat-title {
@@ -522,45 +519,47 @@
   <div class="wrap">
     <div class="section-label reveal">Technologies</div>
     <h2 class="section-title reveal">My Tech <span>Arsenal.</span></h2>
-    <div class="stack-categories reveal">
+    <div class="stack-categories">
 
-      <div>
+      <div class="reveal">
         <div class="stack-cat-label">// Languages & Core</div>
         <div class="stack-row">
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt=""/>Python</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt=""/>Java</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt=""/>SQL</div>
+          <div class="tech-pill">🐍 Python</div>
+          <div class="tech-pill">☕ Java</div>
+          <div class="tech-pill">🗄️ SQL</div>
         </div>
       </div>
 
-      <div>
+      <div class="reveal">
         <div class="stack-cat-label">// Data & Machine Learning</div>
         <div class="stack-row">
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt=""/>Pandas</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt=""/>NumPy</div>
-          <div class="tech-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt=""/>Scikit-Learn</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg" alt=""/>TensorFlow</div>
-          <div class="tech-pill"><img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt=""/>Seaborn</div>
+          <div class="tech-pill">🐼 Pandas</div>
+          <div class="tech-pill">🔢 NumPy</div>
+          <div class="tech-pill">⚙️ Scikit-Learn</div>
+          <div class="tech-pill">🧠 TensorFlow</div>
+          <div class="tech-pill">📊 Seaborn</div>
+          <div class="tech-pill">📈 Matplotlib</div>
           <div class="tech-pill">📊 Power BI</div>
         </div>
       </div>
 
-      <div>
+      <div class="reveal">
         <div class="stack-cat-label">// Frameworks & APIs</div>
         <div class="stack-row">
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" alt=""/>FastAPI</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flask/flask-original.svg" alt=""/>Flask</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="" style="filter:brightness(2)"/>AWS</div>
+          <div class="tech-pill">⚡ FastAPI</div>
+          <div class="tech-pill">🌶️ Flask</div>
+          <div class="tech-pill">☁️ AWS</div>
           <div class="tech-pill">🎈 Streamlit</div>
         </div>
       </div>
 
-      <div>
+      <div class="reveal">
         <div class="stack-cat-label">// Databases & Tools</div>
         <div class="stack-row">
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt=""/>PostgreSQL</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt=""/>Git</div>
-          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg" alt=""/>Jupyter</div>
+          <div class="tech-pill">🐘 PostgreSQL</div>
+          <div class="tech-pill">🔀 Git</div>
+          <div class="tech-pill">📓 Jupyter</div>
+          <div class="tech-pill">💻 VS Code</div>
           <div class="tech-pill">📗 Excel</div>
         </div>
       </div>

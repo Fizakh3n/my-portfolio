@@ -3,206 +3,743 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fiza's Portfolio</title>
-  <link rel="stylesheet" href="/src/index.css" />
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-/>
+  <title>Fiza Khan — Data Scientist & ML Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #07050f;
+      --bg2: #0d0a1a;
+      --bg3: #110e22;
+      --purple: #7c3aed;
+      --purple-light: #a855f7;
+      --purple-glow: #c084fc;
+      --violet: #8b5cf6;
+      --accent: #e879f9;
+      --text: #f1f0f7;
+      --text-muted: #9490b5;
+      --text-dim: #5c5880;
+      --glass: rgba(124, 58, 237, 0.07);
+      --glass-border: rgba(168, 85, 247, 0.18);
+      --glass-border-hover: rgba(232, 121, 249, 0.4);
+    }
 
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CURSOR ── */
+    #cursor-dot {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s;
+      box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
+    }
+    #cursor-ring {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid rgba(168,85,247,0.6);
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    #cursor-glow {
+      position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9997;
+      width: 300px; height: 300px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.12) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease;
+    }
+    body:hover #cursor-ring { border-color: var(--purple-glow); }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.35;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(124,58,237,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,58,237,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── LAYOUT ── */
+    .wrap { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(7,5,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(124,58,237,0.15);
+      transition: all 0.3s;
+    }
+    nav.scrolled { border-bottom-color: rgba(124,58,237,0.3); }
+
+    .nav-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-muted); text-decoration: none;
+      position: relative; transition: color 0.2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 1px; background: var(--accent);
+      transition: width 0.3s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      padding: 0.45rem 1.2rem;
+      border: 1px solid var(--purple);
+      border-radius: 3px;
+      color: var(--purple-light) !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--purple) !important; color: white !important; }
+    .nav-cta::after { display: none !important; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      filter: blur(80px); opacity: 0.25;
+    }
+    .orb-1 { width: 500px; height: 500px; background: var(--purple); top: -100px; right: -100px; }
+    .orb-2 { width: 300px; height: 300px; background: var(--accent); bottom: 50px; left: -80px; opacity: 0.1; }
+
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--purple-light);
+      border: 1px solid rgba(124,58,237,0.3);
+      padding: 0.35rem 0.9rem; border-radius: 2px;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 800; line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+      opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+    }
+    .hero-name .line1 { display: block; color: var(--text); }
+    .hero-name .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--purple-light) 0%, var(--accent) 60%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-role {
+      font-family: 'Space Mono', monospace; font-size: 0.9rem;
+      color: var(--text-muted); letter-spacing: 0.08em;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+    }
+    .hero-role span { color: var(--purple-glow); }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: 0.95rem; line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--violet) 100%);
+      color: white; text-decoration: none;
+      font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 3px;
+      box-shadow: 0 0 30px rgba(124,58,237,0.4);
+      transition: all 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--accent), var(--purple-light));
+      opacity: 0; transition: opacity 0.25s;
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(232,121,249,0.4); }
+    .btn-primary span { position: relative; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid var(--glass-border);
+      color: var(--text-muted); text-decoration: none;
+      font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border-radius: 3px; transition: all 0.25s;
+      background: var(--glass); backdrop-filter: blur(10px);
+    }
+    .btn-outline:hover { border-color: var(--purple-light); color: var(--text); background: rgba(124,58,237,0.1); }
+
+    .hero-scroll {
+      position: absolute; bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); opacity: 0; animation: fadeIn 1s 1.5s forwards;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--purple-light), transparent);
+      animation: scrollDrop 2s 1.5s ease-in-out infinite;
+    }
+    @keyframes scrollDrop { 0%,100%{transform:scaleY(1);opacity:1} 50%{transform:scaleY(0.5);opacity:0.5} }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; position: relative; z-index: 1; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple-light);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; display: block; width: 30px; height: 1px;
+      background: var(--purple-light);
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 800;
+      letter-spacing: -0.02em; color: var(--text);
+      margin-bottom: 3.5rem;
+    }
+    .section-title span { color: var(--accent); }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+    }
+    .about-text-block p {
+      font-size: 0.95rem; line-height: 1.9; color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+    .about-text-block em { color: var(--purple-glow); font-style: italic; }
+
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .stat-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 8px; padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card:hover { border-color: var(--glass-border-hover); transform: translateY(-3px); }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--purple-light), var(--accent));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ── TECH STACK ── */
+    #stack { background: linear-gradient(180deg, transparent, rgba(124,58,237,0.04), transparent); }
+
+    .stack-categories { display: flex; flex-direction: column; gap: 2.5rem; }
+    .stack-cat-label {
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+    .stack-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+    .tech-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 4px; backdrop-filter: blur(10px);
+      font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted);
+      transition: all 0.25s; cursor: default;
+    }
+    .tech-pill img { width: 18px; height: 18px; object-fit: contain; }
+    .tech-pill:hover {
+      border-color: var(--glass-border-hover); color: var(--text);
+      background: rgba(124,58,237,0.12);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(124,58,237,0.2);
+    }
+
+    /* ── PROJECTS ── */
+    .proj-cat-title {
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--purple-light);
+      padding: 0.4rem 0.8rem;
+      border-left: 2px solid var(--purple);
+      margin-bottom: 1.5rem; margin-top: 3rem;
+    }
+    .proj-cat-title:first-of-type { margin-top: 0; }
+
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem; }
+
+    .proj-card {
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 10px; padding: 1.75rem;
+      backdrop-filter: blur(12px);
+      transition: all 0.3s; position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .proj-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--purple), var(--accent), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .proj-card:hover { border-color: var(--glass-border-hover); transform: translateY(-5px); box-shadow: 0 20px 60px rgba(124,58,237,0.15); }
+    .proj-card:hover::before { opacity: 1; }
+
+    .proj-card h3 {
+      font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.75rem;
+    }
+    .proj-card p {
+      font-size: 0.82rem; line-height: 1.75; color: var(--text-muted);
+      flex: 1; margin-bottom: 1.5rem;
+    }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Space Mono', monospace; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--purple-light); text-decoration: none;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .proj-link:hover { color: var(--accent); gap: 0.8rem; }
+    .proj-link i { font-size: 0.65rem; }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+    .contact-sub {
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .contact-links {
+      display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 1.75rem;
+      background: var(--glass); border: 1px solid var(--glass-border);
+      border-radius: 8px; backdrop-filter: blur(10px);
+      font-family: 'Space Mono', monospace; font-size: 0.75rem;
+      color: var(--text-muted); text-decoration: none; letter-spacing: 0.08em;
+      transition: all 0.25s;
+    }
+    .contact-link i { font-size: 1rem; }
+    .contact-link:hover { border-color: var(--glass-border-hover); color: var(--text); transform: translateY(-3px); box-shadow: 0 10px 40px rgba(124,58,237,0.2); }
+    .contact-link.linkedin:hover { border-color: #0a66c2; color: #0a66c2; }
+    .contact-link.github:hover { border-color: #e879f9; color: #e879f9; }
+    .contact-link.email:hover { border-color: #ea4335; color: #ea4335; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 2.5rem 2rem;
+      border-top: 1px solid rgba(124,58,237,0.1);
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.1em; color: var(--text-dim);
+      position: relative; z-index: 1;
+    }
+    footer span { color: var(--purple-light); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--purple); border-radius: 2px; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,0.3), transparent);
+      margin: 0; border: none;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero-name { font-size: 3rem; }
+    }
+  </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <header class="top-bar">
-    <h1 class="headline">Welcome to Fiza's Portfolio</h1>
-    <nav class="navbar">
-      <ul>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#about">About Me</a></li>
-        <button id="theme-toggle">🌙</button>
 
-      </ul>
-    </nav>
-  </header>
+<!-- Cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-glow"></div>
 
-  <section class="intro-line">
-    <p>"Engineering insights at the crossroads of product, ML, and business impact"</p>
-  </section>
+<!-- Nav -->
+<nav id="navbar">
+  <div class="nav-logo">fiza<span>.</span>khan</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
 
-
-  <!-- About Me -->
-  <section id="about">
-    <h2 class="section-title">About Me</h2> 
-    <div class="about-card">
-      <p class="about-text">
-        I’m currently pursuing my B.Tech in Computer Science and actively diving into the world of data science and analytics. With a solid foundation in statistics, SQL, Python, and machine learning, I love turning raw data into meaningful insights. <br><br>
-        I'm passionate about solving real-world problems and creating data-driven solutions that leave an impact. I bring curiosity, precision, and a forward-thinking mindset to every project I work on. <br><br>
-        <em>Turning raw data into real decisions — that's my kind of thrill.</em>
-      </p>
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-orb orb-1"></div>
+  <div class="hero-orb orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Available for collaboration</div>
+    <h1 class="hero-name">
+      <span class="line1">Fiza</span>
+      <span class="line2">Khan.</span>
+    </h1>
+    <p class="hero-role">Data Scientist &nbsp;/&nbsp; <span>ML Engineer</span> &nbsp;/&nbsp; B.Tech CSE</p>
+    <p class="hero-desc">
+      Engineering insights at the crossroads of product, ML, and business impact.
+      Turning raw data into decisions that actually matter — with precision, curiosity, and a forward-thinking mindset.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary"><span>View My Work</span> <i class="fas fa-arrow-right"></i></a>
+      <a href="mailto:mfizakhan05@gmail.com" class="btn-outline"><i class="fas fa-paper-plane"></i> Get in Touch</a>
     </div>
-  </section>
-  <div style="display: flex; justify-content: center; align-items: center; margin-top: 2rem;">
-  <lottie-player 
-    src="https://assets1.lottiefiles.com/packages/lf20_tfb3estd.json"
-    background="transparent"  
-    speed="1"  
-    style="width: 300px; height: 300px;"  
-    loop  
-    autoplay>
-  </lottie-player>
-</div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
 
-  
+<hr class="divider">
 
-
-  
-
-  <!-- Projects -->
-  <section id="projects">
-    <h2 class="project-title">Projects</h2> 
-    
-    <h2 style="color: #0a1128; text-align: left;">Power BI Dashboards</h2>
-
-<div class="project">
-  <h3>Amazon Sales and Insights Dashboard</h3>
-  <p><em>
-    Developed a dynamic Power BI dashboard to analyze customer retention trends, uncovering key insights into repeat purchase behavior and high-value customer segments. By evaluating discount effectiveness and purchase frequency, the dashboard provides data-driven strategies to enhance retention and optimize revenue. Leveraging DAX calculations, it automates critical metrics like CLV, AOV, and repeat purchase rate, enabling businesses to make informed decisions. The insights derived help in identifying patterns across categories, payment methods, and seasonal trends, offering a strategic approach to customer engagement.
-  </em></p>
-  <a href="https://github.com/Fizakh3n/Amazon-Sales-Retention" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>HR Attrition Dashboard</h3>
-  <p><em>
-    Designed an interactive HR analytics dashboard to analyze employee attrition and workforce trends using Power BI. Key insights include attrition breakdown by age, salary, job role, and education, along with average tenure and income analysis. Implemented DAX measures for KPIs like attrition rate (16.1%) and demographic trends. Enhanced data-driven decision-making in HR by identifying key retention factors.
-  </em></p>
-  <a href="https://github.com/Fizakh3n/HR-ANALYTICS-DASHBOARD-" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>Inventory Dashboard for Cost Efficiency</h3>
-  <p><em>
-    Developed an interactive Power BI dashboard to identify and resolve supply chain inefficiencies. Analyzed supplier performance, stock turnover, shipping costs, and demand trends to enhance decision-making. Provided actionable insights to reduce costs, prevent stockouts, and improve logistics efficiency. Designed for real-world applications in retail, e-commerce, and manufacturing.
-  </em></p>
-  <a href="https://github.com/Fizakh3n/Supply-Chain-Efficieny-Cost-Optimization-" target="_blank">View Project</a>
-</div>
-
-<h2 style="color: #0a1128; text-align: left;"> Machine Learning Projects</h2>
-
-<div class="project">
-  <h3>Salary Prediction</h3>
-  <p><em>Deployed a Flask web application that estimates salaries based on user inputs such as experience, education, and job title. This project refined my skills in backend integration, model deployment, and clean file structuring. Leveraged HTML and CSS to ensure a responsive user interface. It reinforced my understanding of predictive modeling, outlier detection, and the essentials of building lightweight ML services for real-world use.</em></p>
-  <a href="https://github.com/Fizakh3n/SALARY-PREDICTION" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>Flight Price Prediction</h3>
-  <p><em>Built a web app that predicts airline ticket prices using key features like departure time, airline, source, and destination cities. With over 85% model accuracy, the app offers travelers fare estimates through an intuitive frontend built using HTML and CSS. This project boosted my data preprocessing and feature engineering skills while enhancing my ability to merge ML models with frontend user interfaces.</em></p>
-  <a href="https://github.com/Fizakh3n/Flight-Price-Prediction-" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>Customer Segmentation & Classification</h3>
-  <p><em>Designed a hybrid ML pipeline combining DBSCAN clustering for segmentation and a LightGBM classifier for predictive analysis. Applied on 2200+ customer records, this solution achieved 89% accuracy in predicting customer group membership. Focused on actionable business insights, model interpretability, and strategic feature engineering—making it a valuable tool for customer targeting and retention strategies.</em></p>
-  <a href="https://github.com/Fizakh3n/Customer-Segmentation-Classification-" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>Potato Disease Classifier</h3>
-  <p><em>Built a deep learning model using CNNs to classify potato leaf diseases (Early Blight, Late Blight, and Healthy) with 94.65% validation accuracy. Engineered a lightweight Streamlit web app for real-time image-based predictions. This project sharpened my convolutional architecture design and gave hands-on exposure to deploying deep learning in a practical, interactive setting.</em></p>
-  <a href="https://github.com/Fizakh3n/Potato-disease-Classifier" target="_blank">View Project</a>
-</div>
-
-  
-<h2 style="color: #0a1128; text-align: left; margin-top: 4rem;">Python Tools & Utilities</h2>
-
-<div class="project">
-  <h3>Automated EDA Tool (Streamlit)</h3>
-  <p>
-    <em>
-      Built an Automated Exploratory Data Analysis tool using Python and Streamlit that enables users to upload CSV files and generate dynamic insights through univariate/bivariate visualizations, correlation analysis, and outlier detection. Designed to handle messy datasets gracefully and built with a clean, matte interface to ensure a seamless user experience.
-    </em>
-  </p>
-  <a href="https://github.com/Fizakh3n/Automated-EDA-Tool" target="_blank">View Project</a>
-</div>
-
-<div class="project">
-  <h3>AI-powered Dataset Generator (Streamlit)</h3>
-  <p>
-    <em>
-      Developed a customizable dataset generator using Python and Streamlit to produce realistic fake data for domains like healthcare, sales, and e-commerce. Features include category selection, row and column customization, datatype flexibility, and instant summary stats — ideal for testing, analysis, or prototyping without real-world data dependency.
-    </em>
-  </p>
-  <a href="https://github.com/Fizakh3n/Dataset-Generator" target="_blank">View Project</a>
-</div>
-
-    <div class="project">
-  <h3>Customer Segmentation Assistant </h3>
-  <p>
-    <em>
-      Built an AI-powered Streamlit chatbot that classifies customers into key segments using LightGBM. Combined clustering (DBSCAN) and classification to identify high-value loyalists vs. budget-conscious customers. Styled with a sleek UI and deployed locally for fast testing. Focused on practicality, minimal input, and clean results.
-    </em>
-  </p>
-  <a href="https://github.com/Fizakh3n/Customer-Chatbot-Assistant" target="_blank">View Project</a>
-</div>
-
-<h2 style="color: #0a1128; text-align: left; margin-top: 4rem;">Excel</h2>
-
-<div class="project">
-  <h3>Vrinda-Store-Analysis-Excel-Report</h3>
-  <p>
-    <em>
-      Conducted sales analysis using Excel to uncover key trends in customer demographics, regional sales, and order status. Identified that females contribute 64% of sales, with top-selling states including Maharashtra and Karnataka. Tracked monthly sales trends, fulfillment rates, and platform-wise sales (Amazon, Flipkart, etc.) to optimize business strategies. Utilized pivot tables, data cleaning, and visualization for actionable insights.
-   </em>
-  </p>
-  <a href="https://github.com/Fizakh3n/Vrinda-Store-Analysis-Excel-Report/tree/main" target="_blank">View Project</a>
-</div>
-
-
-  </section>
-  
-
-  <!-- Contact -->
-  <section id="contact" style="margin-top: 2rem;">
-    <h2 class="contact">Contact </h2>
-
-    <div class="contact-icons">
-      <a href="https://www.linkedin.com/in/fiza-kh3n" target="_blank">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://github.com/Fizakh3n" target="_blank">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="mailto:mfizakhan05@gmail.com" target="_blank">
-        <i class="fas fa-envelope"></i>
-      </a>
+<!-- About -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-label reveal">About Me</div>
+    <h2 class="section-title reveal">Building at the edge of<br><span>data & intelligence.</span></h2>
+    <div class="about-grid">
+      <div class="about-text-block reveal">
+        <p>Currently pursuing B.Tech in Computer Science while actively diving deep into data science and machine learning. With a solid foundation in statistics, SQL, Python, and deep learning, I love turning raw data into meaningful insights.</p>
+        <p>I'm passionate about solving real-world problems and creating data-driven solutions that leave an impact. I bring curiosity, precision, and a forward-thinking mindset to every project.</p>
+        <p><em>"I don't believe in overfitting — neither in models, nor in life. ⚡"</em></p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Projects Built</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">94%</div>
+          <div class="stat-label">Best Model Accuracy</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Tech Stacks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Curiosity</div>
+        </div>
+      </div>
     </div>
-     </section>
+  </div>
+</section>
 
-     <script>
-      const toggle = document.getElementById('theme-toggle');
-      toggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        toggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
-      });
-    </script>
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<hr class="divider">
 
-<lottie-player
-  src="https://lottie.host/11bc2f49-6804-479f-a27f-6fa3657460b7/hHZ4TPqO5O.json"
-  background="transparent"
-  speed="1"
-  style="width: 300px; height: 300px;"
-  loop
-  autoplay>
-</lottie-player>
+<!-- Stack -->
+<section id="stack">
+  <div class="wrap">
+    <div class="section-label reveal">Technologies</div>
+    <h2 class="section-title reveal">My Tech <span>Arsenal.</span></h2>
+    <div class="stack-categories reveal">
 
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+      <div>
+        <div class="stack-cat-label">// Languages & Core</div>
+        <div class="stack-row">
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt=""/>Python</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt=""/>Java</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt=""/>SQL</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="stack-cat-label">// Data & Machine Learning</div>
+        <div class="stack-row">
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/pandas/pandas-original.svg" alt=""/>Pandas</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/numpy/numpy-original.svg" alt=""/>NumPy</div>
+          <div class="tech-pill"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt=""/>Scikit-Learn</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg" alt=""/>TensorFlow</div>
+          <div class="tech-pill"><img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt=""/>Seaborn</div>
+          <div class="tech-pill">📊 Power BI</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="stack-cat-label">// Frameworks & APIs</div>
+        <div class="stack-row">
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/fastapi/fastapi-original.svg" alt=""/>FastAPI</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/flask/flask-original.svg" alt=""/>Flask</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg" alt="" style="filter:brightness(2)"/>AWS</div>
+          <div class="tech-pill">🎈 Streamlit</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="stack-cat-label">// Databases & Tools</div>
+        <div class="stack-row">
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg" alt=""/>PostgreSQL</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" alt=""/>Git</div>
+          <div class="tech-pill"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/jupyter/jupyter-original.svg" alt=""/>Jupyter</div>
+          <div class="tech-pill">📗 Excel</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Projects -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-label reveal">Work</div>
+    <h2 class="section-title reveal">Selected <span>Projects.</span></h2>
+
+    <div class="proj-cat-title reveal">// Power BI Dashboards</div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <h3>Amazon Sales & Insights Dashboard</h3>
+        <p>Dynamic Power BI dashboard analyzing customer retention trends, repeat purchase behavior, and high-value segments. Automates CLV, AOV, and repeat purchase rate via DAX calculations.</p>
+        <a href="https://github.com/Fizakh3n/Amazon-Sales-Retention" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>HR Attrition Dashboard</h3>
+        <p>Interactive HR analytics dashboard breaking down attrition by age, salary, role, and education. DAX-powered KPIs including a 16.1% attrition rate for data-driven HR decisions.</p>
+        <a href="https://github.com/Fizakh3n/HR-ANALYTICS-DASHBOARD-" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>Inventory Cost Efficiency Dashboard</h3>
+        <p>Supply chain analytics dashboard analyzing supplier performance, stock turnover, and shipping costs. Designed for retail, e-commerce, and manufacturing applications.</p>
+        <a href="https://github.com/Fizakh3n/Supply-Chain-Efficieny-Cost-Optimization-" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="proj-cat-title reveal" style="margin-top:3rem">// Machine Learning</div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <h3>Salary Prediction — Flask App</h3>
+        <p>Deployed Flask web application estimating salaries from experience, education, and job title. Covers predictive modeling, outlier detection, and lightweight ML service architecture.</p>
+        <a href="https://github.com/Fizakh3n/SALARY-PREDICTION" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>Flight Price Prediction</h3>
+        <p>85%+ accurate ML model forecasting airline ticket prices. Full-stack web app merging deep feature engineering with an intuitive HTML/CSS frontend for travelers.</p>
+        <a href="https://github.com/Fizakh3n/Flight-Price-Prediction-" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>Customer Segmentation & Classification</h3>
+        <p>Hybrid ML pipeline: DBSCAN clustering + LightGBM classifier on 2200+ records achieving 89% accuracy. Focused on actionable business insights and strategic feature engineering.</p>
+        <a href="https://github.com/Fizakh3n/Customer-Segmentation-Classification-" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>Potato Disease Classifier</h3>
+        <p>CNN deep learning model classifying potato leaf diseases with 94.65% validation accuracy. Lightweight Streamlit app for real-time image-based predictions.</p>
+        <a href="https://github.com/Fizakh3n/Potato-disease-Classifier" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="proj-cat-title reveal" style="margin-top:3rem">// Python Tools & Utilities</div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <h3>Automated EDA Tool</h3>
+        <p>Streamlit app for instant exploratory data analysis — upload a CSV, get univariate/bivariate visualizations, correlation heatmaps, and outlier detection automatically.</p>
+        <a href="https://github.com/Fizakh3n/Automated-EDA-Tool" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>AI-Powered Dataset Generator</h3>
+        <p>Customizable synthetic data generator for healthcare, sales, and e-commerce domains. Features row/column control, datatype flexibility, and instant summary statistics.</p>
+        <a href="https://github.com/Fizakh3n/Dataset-Generator" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="proj-card reveal">
+        <h3>Customer Segmentation Chatbot</h3>
+        <p>AI-powered Streamlit chatbot classifying customers using LightGBM. Combines DBSCAN clustering and classification for fast, minimal-input, clean-result predictions.</p>
+        <a href="https://github.com/Fizakh3n/Customer-Chatbot-Assistant" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <div class="proj-cat-title reveal" style="margin-top:3rem">// Excel Analytics</div>
+    <div class="projects-grid">
+      <div class="proj-card reveal">
+        <h3>Vrinda Store Sales Analysis</h3>
+        <p>Deep-dive Excel report on customer demographics, regional sales, and order status. Females drive 64% of sales; pivot tables and visualizations surface actionable retail strategies.</p>
+        <a href="https://github.com/Fizakh3n/Vrinda-Store-Analysis-Excel-Report/tree/main" target="_blank" class="proj-link">View on GitHub <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- Contact -->
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-inner">
+      <div class="section-label reveal" style="justify-content:center">Contact</div>
+      <h2 class="section-title reveal">Let's build something<br><span>remarkable.</span></h2>
+      <p class="contact-sub reveal">I'm always open to interesting data challenges, collaborations, and new opportunities. Drop a message — I'd love to connect.</p>
+      <div class="contact-links reveal">
+        <a href="https://www.linkedin.com/in/fiza-kha3n" target="_blank" class="contact-link linkedin">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="https://github.com/Fizakh3n" target="_blank" class="contact-link github">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="mailto:mfizakhan05@gmail.com" class="contact-link email">
+          <i class="fas fa-envelope"></i> Email Me
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
-  Built with 💻 + ☕ + 🧕🏽 by Fiza • © 2025
+  Built with <span>💜</span> by Fiza Khan &nbsp;•&nbsp; © 2025 &nbsp;•&nbsp; <span>Data Scientist & ML Engineer</span>
 </footer>
 
+<script>
+  // Cursor
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  const glow = document.getElementById('cursor-glow');
+  let mx = 0, my = 0, rx = 0, ry = 0, gx = 0, gy = 0;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function animateCursor() {
+    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    gx += (mx - gx) * 0.06; gy += (my - gy) * 0.06;
+    glow.style.left = gx + 'px'; glow.style.top = gy + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, .proj-card, .tech-pill, .stat-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      ring.style.width = '56px'; ring.style.height = '56px';
+      ring.style.borderColor = 'rgba(232,121,249,0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      ring.style.width = '36px'; ring.style.height = '36px';
+      ring.style.borderColor = 'rgba(168,85,247,0.6)';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger children in grids
+  document.querySelectorAll('.projects-grid').forEach(grid => {
+    grid.querySelectorAll('.proj-card').forEach((card, i) => {
+      card.style.transitionDelay = (i * 0.08) + 's';
+    });
+  });
+  document.querySelectorAll('.stack-row').forEach(row => {
+    row.querySelectorAll('.tech-pill').forEach((pill, i) => {
+      pill.style.transitionDelay = (i * 0.04) + 's';
+      pill.classList.add('reveal');
+    });
+  });
+  reveals.forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
-
